@@ -13,4 +13,10 @@ class PropertyController extends Controller
 
         return view('property.show', compact('property'));
     }
+
+    public function prediccions()
+    {
+        return view('property.predictions');
+    }
+    
 }

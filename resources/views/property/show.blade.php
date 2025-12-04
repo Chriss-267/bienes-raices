@@ -147,7 +147,7 @@
                     <hr>
 
                     <p class="text-xl">{{ $property->description }}</p>
-                    <a class="py-2 px-6 hover:bg-gray-100 rounded-lg bg-gray-200" href="{{$property->source}}" target="_blank">Visitar Sitio del anunciante</a>
+                    <a class="py-4 px-8 text-lg hover:bg-slate-800 rounded-lg bg-black font-bold text-white" href="{{$property->source}}" target="_blank">Visitar Sitio del anunciante</a>
 
                 </div>
 

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('price_predictions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
-            $table->foreignId('property_id')->constrained('property_types')->onDelete('cascade');
+            $table->foreignId('property_id')->nullable()->constrained('properties')->onDelete('cascade');
             $table->date('prediction_date');
-            $table->decimal('predicted_price', 10, 8);
+            $table->decimal('predicted_price', 12, 2);
             $table->string('model_used');
             $table->timestamps();
         });

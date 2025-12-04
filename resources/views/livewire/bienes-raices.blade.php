@@ -71,7 +71,7 @@
                 oninput="this.previousElementSibling.innerText=this.value"
             />
 
-            <div class="-mt-2 flex w-full justify-between">
+            <div class="mt-2 flex w-full justify-between">
             <span class="text-sm text-gray-600">${{number_format($minPrice, 2, '.', ',')}}</span>
             <span class="text-sm text-gray-600">${{number_format($maxPrice), 2, '.', ','}}</span>
             </div>
@@ -81,7 +81,24 @@
 
         <div class="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @foreach ($properties as $property)
-            <div class="bg-white rounded-xl shadow hover:shadow-lg transition">
+            <div class="bg-white rounded-xl shadow hover:shadow-lg transition relative">
+                <button onclick="toggleFavorite(this, {{ json_encode([
+                    'id' => $property->id,
+                    'title' => $property->title,
+                    'price' => '$' . number_format($property->price, 2),
+                    'image_url' => $property->image_url,
+                    'location' => $property->location->location,
+                    'type' => $property->type->name,
+                    'bedrooms' => $property->bedrooms,
+                    'bathrooms' => $property->bathrooms,
+                    'area' => $property->area
+                ]) }})" 
+                class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition z-10 favorite-btn"
+                data-id="{{ $property->id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </button>
                 <img src="{{ $property->image_url }}" class="rounded-t-xl w-full h-48 object-cover">
                 <div class="p-4 space-y-2">
                     <span class="bg-gray-100 p-1 rounded-lg font-semibold">{{ $property->type->name }}</span>
@@ -120,14 +137,57 @@
     </div>
     </div>
     
-
     <div class="mt-6">
         {{ $properties->links() }}
     </div>
 
+    <script>
+        function toggleFavorite(btn, property) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const index = favorites.findIndex(p => p.id === property.id);
+            const svg = btn.querySelector('svg');
+            
+            if (index === -1) {
+                // Add to favorites
+                favorites.push(property);
+                svg.setAttribute('fill', 'currentColor');
+                svg.classList.remove('text-gray-400');
+                svg.classList.add('text-red-500');
+            } else {
+                // Remove from favorites
+                favorites.splice(index, 1);
+                svg.setAttribute('fill', 'none');
+                svg.classList.remove('text-red-500');
+                svg.classList.add('text-gray-400');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
 
+        function updateFavoriteIcons() {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const buttons = document.querySelectorAll('.favorite-btn');
+            
+            buttons.forEach(btn => {
+                const id = parseInt(btn.dataset.id);
+                const isFavorite = favorites.some(p => p.id === id);
+                const svg = btn.querySelector('svg');
+                
+                if (isFavorite) {
+                    svg.setAttribute('fill', 'currentColor');
+                    svg.classList.remove('text-gray-400');
+                    svg.classList.add('text-red-500');
+                } else {
+                    svg.setAttribute('fill', 'none');
+                    svg.classList.remove('text-red-500');
+                    svg.classList.add('text-gray-400');
+                }
+            });
+        }
 
-
-
-    {{-- Be like water. --}}
+        // Run on load and after Livewire updates
+        document.addEventListener('DOMContentLoaded', updateFavoriteIcons);
+        document.addEventListener('livewire:navigated', updateFavoriteIcons);
+        document.addEventListener('livewire:updated', updateFavoriteIcons);
+    </script>
 </div>

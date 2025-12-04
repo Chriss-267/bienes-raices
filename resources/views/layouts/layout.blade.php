@@ -60,15 +60,17 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 dark:bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                            <a href="#" aria-current="page"
+                            <a href="{{url('/')}}" aria-current="page"
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Bienes
                                 Raices</a>
-                            <a href="#"
+                            <a href="{{ route('price_predictions.index') }}"
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Predicciones</a>
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Estadisticas</a>
-                            <a href="#"
+                            <a href="{{ route('price_history.index') }}"
                                 class="rounded-md px-3 py-2 text-sm font-medium  hover:bg-white/5 hover:text-gray-500">Historicos</a>
+                            <a href="{{ route('favorites.index') }}"
+                                class="rounded-md px-3 py-2 text-sm font-medium  hover:bg-white/5 hover:text-gray-500">Favoritos</a>
                         </div>
                     </div>
                 </div>
@@ -131,7 +133,7 @@
                     <a href="{{ url('/') }}" class="flex items-center">
                         <span
                             class="self-center flex items-center gap-2 text-2xl font-semibold whitespace-nowrap dark:text-white"><img src="{{ asset('LOGOUPED.png') }}"
-                            alt="Your Company" class="h-8 w-auto" /> Bienes Raices</span>
+                            alt="Your Company" class="h-8 w-auto" /> Bienes Raices UPED™</span>
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
@@ -173,7 +175,7 @@
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{date('Y')}} <a
-                        href="https://flowbite.com/" class="hover:underline">Bienes Raices</a>. All Rights Reserved.
+                        href="https://flowbite.com/" class="hover:underline">Bienes Raices UPED™</a>. All Rights Reserved.
                 </span>
                 <div class="flex mt-4 sm:justify-center sm:mt-0">
                     <a href="#" class="text-gray-500 hover:text-gray-200 dark:hover:text-white">

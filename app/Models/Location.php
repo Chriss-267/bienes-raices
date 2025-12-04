@@ -16,4 +16,9 @@ class Location extends Model
     {
         return $this->hasMany(Property::class);
     }
+
+    public function pricePredictions()
+    {
+        return $this->hasMany(PricePrediction::class);
+    }
 }
