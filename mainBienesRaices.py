@@ -195,6 +195,7 @@ try:
                     bathrooms_tag = c.select_one('.d3-ad-tile__details-item:nth-child(4)')
                     bathrooms = bathrooms_tag.get_text(strip=True) if bathrooms_tag else 1
                     #fecha de publicacion
+                    now = date.today()
                     published_at = now.strftime('%Y-%m-%d') 
 
                     results.append({
