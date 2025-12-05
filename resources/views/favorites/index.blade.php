@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Mis Favoritos</h2>
     
     <div id="favorites-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -55,17 +55,28 @@
                             </svg>
                             <p class="text-sm">${property.location}</p>
                         </div>
-                        <p class="text-gray-700 dark:text-gray-200 font-bold text-xl">${property.price}</p>
-                        <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-between mt-4">
+                        <p class="text-gray-700 font-bold">${property.price}</p>
+                        <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-between mt-2">
                             <div class="flex gap-4">
-                                <div class="flex items-center gap-1"><span class="font-bold">${property.bathrooms}</span> Baños</div>
-                                <div class="flex items-center gap-1"><span class="font-bold">${property.bedrooms}</span> Hab.</div>
-                                <div class="flex items-center gap-1"><span class="font-bold">${property.area}</span> m²</div>
+                                <div class="flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bath-icon lucide-bath"><path d="M10 4 8 6"/><path d="M17 19v2"/><path d="M2 12h20"/><path d="M7 19v2"/><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg>
+                                    <span class="font-bold">${property.bathrooms}</span>
+                                    
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-icon lucide-bed"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                                    <span class="font-bold">${property.bedrooms}</span>
+                                </div>
+                                <div class="flex items-center gap-1">   
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-icon lucide-scan"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                                    <span class="font-bold">${property.area}</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="/property/${property.id}" class="p-2 border rounded-lg hover:bg-gray-100 text-black cursor-pointer">Ver Detalles</a>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <a href="/property/${property.id}" class="block w-full text-center py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white transition">Ver Detalles</a>
-                        </div>
+                        
                     </div>
                 </div>
             `).join('');

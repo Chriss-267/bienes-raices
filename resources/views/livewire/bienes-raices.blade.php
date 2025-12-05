@@ -79,62 +79,65 @@
         </div>
 
 
-        <div class="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        @foreach ($properties as $property)
-            <div class="bg-white rounded-xl shadow hover:shadow-lg transition relative">
-                <button onclick="toggleFavorite(this, {{ json_encode([
-                    'id' => $property->id,
-                    'title' => $property->title,
-                    'price' => '$' . number_format($property->price, 2),
-                    'image_url' => $property->image_url,
-                    'location' => $property->location->location,
-                    'type' => $property->type->name,
-                    'bedrooms' => $property->bedrooms,
-                    'bathrooms' => $property->bathrooms,
-                    'area' => $property->area
-                ]) }})" 
-                class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition z-10 favorite-btn"
-                data-id="{{ $property->id }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                </button>
-                <img src="{{ $property->image_url }}" class="rounded-t-xl w-full h-48 object-cover">
-                <div class="p-4 space-y-2">
-                    <span class="bg-gray-100 p-1 rounded-lg font-semibold">{{ $property->type->name }}</span>
-                    <h3 class="font-semibold text-lg">{{ $property->title }}</h3>
-                    <div class="flex gap-2 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-gray-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        <div class = "max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            @foreach ($properties as $property)
+                <div class="bg-white rounded-xl shadow hover:shadow-lg transition relative">
+                    <button onclick="toggleFavorite(this, {{ json_encode([
+                        'id' => $property->id,
+                        'title' => $property->title,
+                        'price' => '$' . number_format($property->price, 2),
+                        'image_url' => $property->image_url,
+                        'location' => $property->location->location,
+                        'type' => $property->type->name,
+                        'bedrooms' => $property->bedrooms,
+                        'bathrooms' => $property->bathrooms,
+                        'area' => $property->area
+                    ]) }})" 
+                    class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition z-10 favorite-btn"
+                    data-id="{{ $property->id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        <p class="text-sm text-gray-600">{{ $property->location->location }}</p>
-                    </div>
-                    <p class="text-gray-700 font-bold">${{ number_format($property->price, 2) }}</p>
-                    <div class="text-sm text-gray-500 flex items-center justify-between">
-                        <div class="flex gap-6 items-center">
-                            <div class="flex gap-1 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bath-icon lucide-bath"><path d="M10 4 8 6"/><path d="M17 19v2"/><path d="M2 12h20"/><path d="M7 19v2"/><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg>
-                                <p>{{ $property->bathrooms }}</p>
-                            </div>
-                            <div class="flex gap-1 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-icon lucide-bed"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
-                                <p>{{ $property->bedrooms }}</p>
-                            </div>
-                            <div class="flex gap-1 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-icon lucide-scan"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
-                                <p>{{ $property->area }}</p>
-                            </div>
-                            
+                    </button>
+                    <img src="{{ $property->image_url }}" class="rounded-t-xl w-full h-48 object-cover">
+                    <div class="p-4 space-y-2">
+                        <span class="bg-gray-100 p-1 rounded-lg font-semibold">{{ $property->type->name }}</span>
+                        <h3 class="font-semibold text-lg">{{ $property->title }}</h3>
+                        <div class="flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-gray-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
+                            <p class="text-sm text-gray-600">{{ $property->location->location }}</p>
                         </div>
-                        <div>
-                            <a href="{{ route('property.show', $property->id)}}" class="p-2 border rounded-lg hover:bg-gray-100 text-black cursor-pointer">Ver Detalles</a>
+                        <p class="text-gray-700 font-bold">${{ number_format($property->price, 2) }}</p>
+                        <div class="text-sm text-gray-500 flex items-center justify-between">
+                            <div class="flex gap-6 items-center">
+                                <div class="flex gap-1 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bath-icon lucide-bath"><path d="M10 4 8 6"/><path d="M17 19v2"/><path d="M2 12h20"/><path d="M7 19v2"/><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg>
+                                    <p>{{ $property->bathrooms }}</p>
+                                </div>
+                                <div class="flex gap-1 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-icon lucide-bed"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                                    <p>{{ $property->bedrooms }}</p>
+                                </div>
+                                <div class="flex gap-1 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-icon lucide-scan"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                                    <p>{{ $property->area }}</p>
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <a href="{{ route('property.show', $property->id)}}" class="p-2 border rounded-lg hover:bg-gray-100 text-black cursor-pointer">Ver Detalles</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
+        </div>
+        
     </div>
     
     <div class="mt-6">

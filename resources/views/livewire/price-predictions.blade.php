@@ -115,6 +115,9 @@
                                             <span>{{ $prediction->property->area ?? 'N/A' }}</span>
                                         </div>
                                     </div>
+                                    <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                                        <a href="{{ route('property.show', $prediction->property->id)}}" class="p-2 border rounded-lg hover:bg-gray-100 text-black cursor-pointer">Ver Detalles</a>
+                                    </div>
                                 </div>
                             @endif
                         </div>

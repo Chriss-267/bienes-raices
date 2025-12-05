@@ -15,7 +15,7 @@ import time
 import sys
 
 #sql
-get_ipython().system('pip install mysql-connector-python')
+#get_ipython().system('pip install mysql-connector-python')
 import mysql.connector
 
 #para fechas
@@ -63,10 +63,10 @@ try:
 
     #conexion con mysql
     conn = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='proyecto-machine',
+        host='127.0.0.1',
+        user='chriss_user',
+        password='gengar267',
+        database='bienes_raices',
     )
     cursor = conn.cursor()
 
@@ -153,8 +153,63 @@ try:
             #         break 
 
             if id_url == 2: # encuentra24.com aca se seguiria con mas urls
-                # scraping solo con beautifulsoup
-                print("Pendiente")
+                url2 = requests.get(url, headers=headers, timeout=20)
+                if url2.status_code != 200:
+                    print(f"Fallo en la extracción de Encuentra24 en página {page}: {url2.status_code}")
+                    break
+                soup2 = BeautifulSoup(url2.content, 'html.parser')
+                cards = soup2.select(".d3-ads-grid__item")
+                for c in cards:
+                    title_tag = c.select_one(".d3-ad-tile__title")
+                    title = title_tag.get_text(strip=True) if title_tag else None
+                    description_tag = c.select_one("a.d3-ad-tile__description")
+                    description = description_tag.get_text(strip=True) if description_tag else None
+                    price_tag = c.select_one(".d3-ad-tile__price")
+                    price = price_tag.get_text(strip=True) if price_tag else None
+                    property_type_id = 1
+                    location_tag = c.select_one('.d3-ad-tile__location span')
+                    location = location_tag.get_text(strip=True) if location_tag else None
+                    cursor.execute("SELECT id FROM locations WHERE location LIKE %s", (location,))
+                    query_result = cursor.fetchone()
+                    if query_result:
+                        location_id = query_result[0]
+                    else:
+                        cursor.execute("INSERT INTO locations (location) VALUES (%s)", (location,))
+                        location_id = cursor.lastrowid
+                    #imagen
+                    image_tag = c.select_one('img.d3-photos-carousel__photo')
+                    image_url = None
+                    if image_tag:
+                        image_url = image_tag.get('data-src')
+                    link_tag = c.select_one('a.d3-ad-tile__description')
+                    source = link_tag['href'] if link_tag else None
+                    if source and source.startswith('/'):
+                        source = "https://www.encuentra24.com" + source 
+                    #area es primer item
+                    area_tag = c.select_one('.d3-ad-tile__details-item')
+                    area = area_tag.get_text(strip=True) if area_tag else None
+                    #bedromm es el tercero de la lista
+                    bedrooms_tag = c.select_one('.d3-ad-tile__details-item:nth-child(3)')
+                    bedrooms = bedrooms_tag.get_text(strip=True) if bedrooms_tag else 2
+                    #bathrooms es el cuarto de la lista
+                    bathrooms_tag = c.select_one('.d3-ad-tile__details-item:nth-child(4)')
+                    bathrooms = bathrooms_tag.get_text(strip=True) if bathrooms_tag else 1
+                    #fecha de publicacion
+                    published_at = now.strftime('%Y-%m-%d') 
+
+                    results.append({
+                        'title' : title,
+                        'description' : description,
+                        'price' : price,
+                        'property_type_id' : property_type_id,
+                        'location_id' : location_id,
+                        'bedrooms' : bedrooms,
+                        'bathrooms' : bathrooms,
+                        'area' : area,
+                        'published_at' : published_at,
+                        'image_url' : image_url,
+                        'source' : source   
+                    })
             elif id_url == 3: # remax central
                 url3 = requests.get(url, headers=headers, timeout=20)
                 if url3.status_code != 200:
@@ -216,8 +271,6 @@ except Exception as e:
     print(f"\n¡FALLO CRÍTICO DE EJECUCIÓN!: {e}", file=sys.stderr)
 
 finally:
-    if driver:
-        driver.quit()
         print("\nProceso de Selenium finalizado y navegador Headless cerrado.")
 
 
@@ -381,9 +434,3 @@ for index, row in df_ubicaciones.iterrows():
 
     else:
         print("No hay suficientes datos para realizar la clasificación.")
-
-
-
-
-
-

@@ -64,11 +64,9 @@
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Bienes
                                 Raices</a>
                             <a href="{{ route('price_predictions.index') }}"
-                                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Predicciones</a>
-                            <a href="#"
-                                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Estadisticas</a>
+                                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Clasificaciones</a>
                             <a href="{{ route('price_history.index') }}"
-                                class="rounded-md px-3 py-2 text-sm font-medium  hover:bg-white/5 hover:text-gray-500">Historicos</a>
+                                class="rounded-md px-3 py-2 text-sm font-medium hover:bg-white/5 hover:text-gray-500">Estadisticas</a>
                             <a href="{{ route('favorites.index') }}"
                                 class="rounded-md px-3 py-2 text-sm font-medium  hover:bg-white/5 hover:text-gray-500">Favoritos</a>
                         </div>
